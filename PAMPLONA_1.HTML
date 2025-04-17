@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Navegación</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 60px;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 80%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+        }
+
+        /* Estilo para el botón de regresar */
+        .btn-regresar {
+            background-color: #FF6347;
+            width: 50%;
+            margin: 10px auto;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-regresar:hover {
+            background-color: #FF4500;
+            transform: translateY(-3px);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        label {
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        #whatsappLink {
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="inicio">
+        <img src="logo.png" alt="Logo de la página" class="logo">
+        <h1>REGIONAL PAMPLONA</h1>
+
+        <!-- Botones del menú principal -->
+        <button class="btn" id="btnReporteDiario" onclick="mostrarFormulario()">REPORTE DIARIO</button>
+        <button class="btn" id="btnValidarUsuario" onclick="irAUrl('https://script.google.com/macros/s/AKfycbwEzt9hEVWLy-7GaGEdp1R8SW76SrjOkLOANzhdzaSVq1JszaJ_MyNKhlEHRD7lrbp2sA/exec', 'validarUsuario')">VALIDADOR USUARIO</button>
+        <button class="btn" id="btnRevisionEjecutada" onclick="irAUrl('https://script.google.com/macros/s/AKfycbw2z6rVlBqlPU0drL9Rus_p_ORjVfl8iGQBL-gupoDio4Fq3ElbrqUILguiAtLYWpJZfg/exec', 'revisionEjecutada')">REVISIONES EJECUTADAS</button>
+        <button class="btn" id="btnPendienteDescargas" onclick="irAUrl('https://www.google.com', 'pendienteDescargas')">PENDIENTE DESCARGAS</button>
+        <button class="btn" id="btnPaginaPrueba" onclick="irAUrl('https://www.google.com', 'paginaPrueba')">ERRORES</button>
+
+        <!-- Formulario de Reporte Diario -->
+        <div id="formularioReporte" class="hidden" style="margin-top: 20px; text-align: left;">
+            <h2>Reporte Diario</h2>
+            
+            <label>Operario:</label>
+            <select id="operario">
+                <option value="">Seleccione</option>
+                <option value="Juan Perez">Juan Perez</option>
+                <option value="Maria Lopez">Maria Lopez</option>
+                <option value="Carlos Gomez">Carlos Gomez</option>
+            </select>
+
+            <div id="cicloSeccion">
+                <label>Ciclo:</label>
+                <select id="ciclo">
+                    <option value="">Seleccione</option>
+                    <option value="Ciclo 1">Ciclo 1</option>
+                    <option value="Ciclo 2">Ciclo 2</option>
+                    <option value="Ciclo 3">Ciclo 3</option>
+                </select>
+
+                <label>Sección:</label>
+                <select id="seccion">
+                    <option value="">Seleccione</option>
+                    <option value="Sección A">Sección A</option>
+                    <option value="Sección B">Sección B</option>
+                    <option value="Sección C">Sección C</option>
+                </select>
+            </div>
+
+            <label>Vía:</label>
+            <input type="text" id="via" placeholder="Ingrese la vía">
+
+            <button class="btn" onclick="enviarReporte('salida')">TRASLADO SALIDA</button>
+            <button class="btn" onclick="enviarReporte('regreso')">TRASLADO REGRESO</button>
+            <button class="btn" onclick="enviarReporte('inicio')">INICIO DE LABOR</button>
+            <button class="btn" onclick="enviarReporte('fin')">FIN DE LABOR</button>
+
+            <button class="btn btn-regresar" onclick="regresarAPrincipal()">INICIO</button>
+
+            <br><br>
+            <!-- Enlace para enviar el mensaje a WhatsApp, este se maneja en el código JS -->
+            <a id="whatsappLink" href="#" target="_blank" class="btn hidden">ENVIAR AL GRUPO DE WHATSAPP</a>
+        </div>
+    </div>
+
+    <!-- Sección de la versión y la fecha -->
+    <div class="footer">
+        <p>Versión: 001</p>
+        <p id="fechaHora"></p> <!-- La fecha y hora se actualizarán aquí -->
+    </div>
+
+    <script>
+        function irAUrl(url, boton) {
+            if (boton === 'validarUsuario') {
+                window.open(url, '_blank');
+            } else {
+                localStorage.setItem('lastVisited', url);
+                window.location.href = url;
+            }
+        }
+
+        window.onload = function() {
+            document.getElementById('btnValidarUsuario').style.display = 'inline-block';
+            document.getElementById('btnRevisionEjecutada').style.display = 'inline-block';
+            document.getElementById('btnPendienteDescargas').style.display = 'inline-block';
+            document.getElementById('btnPaginaPrueba').style.display = 'inline-block';
+            document.getElementById('btnReporteDiario').style.display = 'inline-block';
+
+            mostrarFechaHora();
+        };
+
+        function mostrarFechaHora() {
+            const now = new Date();
+            const fecha = now.toLocaleDateString();
+            const hora = now.toLocaleTimeString();
+            document.getElementById('fechaHora').innerHTML = `Fecha y Hora: ${fecha} ${hora}`;
+        }
+
+        function mostrarFormulario() {
+            document.getElementById('btnValidarUsuario').style.display = 'none';
+            document.getElementById('btnRevisionEjecutada').style.display = 'none';
+            document.getElementById('btnPendienteDescargas').style.display = 'none';
+            document.getElementById('btnPaginaPrueba').style.display = 'none';
+            document.getElementById('formularioReporte').classList.remove('hidden');
+        }
+
+        function regresarAPrincipal() {
+            // Aquí volvemos a mostrar los botones principales y ocultamos el formulario
+            document.getElementById('formularioReporte').classList.add('hidden');
+            document.getElementById('btnValidarUsuario').style.display = 'inline-block';
+            document.getElementById('btnRevisionEjecutada').style.display = 'inline-block';
+            document.getElementById('btnPendienteDescargas').style.display = 'inline-block';
+            document.getElementById('btnPaginaPrueba').style.display = 'inline-block';
+            document.getElementById('btnReporteDiario').style.display = 'inline-block';
+        }
+
+        function enviarReporte(tipo) {
+            const operario = document.getElementById('operario').value;
+            const ciclo = document.getElementById('ciclo').value;
+            const seccion = document.getElementById('seccion').value;
+            const via = document.getElementById('via').value;
+
+            if (tipo === 'salida' || tipo === 'regreso') {
+                if (!operario || !ciclo || !seccion || !via) {
+                    alert("Por favor complete todos los campos.");
+                    return;
+                }
+            }
+
+            if (tipo === 'inicio' || tipo === 'fin') {
+                if (!operario || !via) {
+                    alert("Por favor complete los campos de Operario y Vía.");
+                    return;
+                }
+            }
+
+            let mensaje = `*REPORTE*\nOperario: ${operario}\nVía: ${via}`;
+            if (tipo === 'salida') {
+                mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🟢 Traslado de salida iniciado.`;
+            } else if (tipo === 'regreso') {
+                mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🔵 Traslado de regreso iniciado.`;
+            } else if (tipo === 'inicio') {
+                mensaje = `*REPORTE PRIMERA LECTURA*\nOperario: ${operario}\nUsuario: ${via}`;
+            } else if (tipo === 'fin') {
+                mensaje = `*REPORTE FIN DE LABOR*\nOperario: ${operario}\nLLEGANDO A: ${via}`;
+            }
+
+            const mensajeCodificado = encodeURIComponent(mensaje);
+            const link = `https://wa.me/?text=${mensajeCodificado}`;
+
+            window.location.href = link;
+        }
+    </script>
+
+</body>
+</html>
