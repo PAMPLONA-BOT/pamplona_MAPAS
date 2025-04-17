@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Aplicación de Navegación</title>
     <style>
         body {
@@ -53,12 +53,10 @@
             transform: translateY(-3px);
         }
 
-        /* Estilo para el botón de regresar */
         .btn-regresar {
             background-color: #FF6347;
             width: 50%;
             margin: 10px auto;
-            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .btn-regresar:hover {
@@ -123,151 +121,136 @@
 </head>
 <body>
 
-    <div class="container" id="inicio">
-        <img src="Logo.png" alt="Logo de la página" class="Logo">
-        <h1>REGIONAL PAMPLONA</h1>
+<div class="container" id="inicio">
+    <img src="logo.png" alt="Logo de la página" class="logo">
+    <h1>REGIONAL PAMPLONA</h1>
 
-        <!-- Botones del menú principal -->
-        <button class="btn" id="btnReporteDiario" onclick="mostrarFormulario()">REPORTE DIARIO</button>
-        <button class="btn" id="btnValidarUsuario" onclick="irAUrl('https://script.google.com/macros/s/AKfycbwEzt9hEVWLy-7GaGEdp1R8SW76SrjOkLOANzhdzaSVq1JszaJ_MyNKhlEHRD7lrbp2sA/exec', 'validarUsuario')">VALIDADOR USUARIO</button>
-        <button class="btn" id="btnRevisionEjecutada" onclick="irAUrl('https://script.google.com/macros/s/AKfycbw2z6rVlBqlPU0drL9Rus_p_ORjVfl8iGQBL-gupoDio4Fq3ElbrqUILguiAtLYWpJZfg/exec', 'revisionEjecutada')">REVISIONES EJECUTADAS</button>
-        <button class="btn" id="btnPendienteDescargas" onclick="irAUrl('https://www.google.com', 'pendienteDescargas')">PENDIENTE DESCARGAS</button>
-        <button class="btn" id="btnPaginaPrueba" onclick="irAUrl('https://www.google.com', 'paginaPrueba')">ERRORES</button>
+    <button class="btn" onclick="mostrarFormulario()">REPORTE DIARIO</button>
+    <button class="btn" onclick="irAUrl('https://script.google.com/macros/s/AKfycbwEzt9hEVWLy-7GaGEdp1R8SW76SrjOkLOANzhdzaSVq1JszaJ_MyNKhlEHRD7lrbp2sA/exec', 'validarUsuario')">VALIDADOR USUARIO</button>
+    <button class="btn" onclick="irAUrl('https://script.google.com/macros/s/AKfycbw2z6rVlBqlPU0drL9Rus_p_ORjVfl8iGQBL-gupoDio4Fq3ElbrqUILguiAtLYWpJZfg/exec', 'revisionEjecutada')">REVISIONES EJECUTADAS</button>
+    <button class="btn" onclick="irAUrl('https://www.google.com', 'pendienteDescargas')">PENDIENTE DESCARGAS</button>
+    <button class="btn" onclick="irAUrl('https://www.google.com', 'paginaPrueba')">ERRORES</button>
 
-        <!-- Formulario de Reporte Diario -->
-        <div id="formularioReporte" class="hidden" style="margin-top: 20px; text-align: left;">
-            <h2>Reporte Diario</h2>
-            
-            <label>Operario:</label>
-            <select id="operario">
-                <option value="">Seleccione</option>
-                <option value="Juan Perez">Juan Perez</option>
-                <option value="Maria Lopez">Maria Lopez</option>
-                <option value="Carlos Gomez">Carlos Gomez</option>
-            </select>
+    <div id="formularioReporte" class="hidden" style="margin-top: 20px; text-align: left;">
+        <h2>Reporte Diario</h2>
 
-            <div id="cicloSeccion">
-                <label>Ciclo:</label>
-                <select id="ciclo">
-                    <option value="">Seleccione</option>
-                    <option value="Ciclo 1">Ciclo 1</option>
-                    <option value="Ciclo 2">Ciclo 2</option>
-                    <option value="Ciclo 3">Ciclo 3</option>
-                </select>
+        <label>Operario:</label>
+        <select id="operario"></select>
 
-                <label>Sección:</label>
-                <select id="seccion">
-                    <option value="">Seleccione</option>
-                    <option value="Sección A">Sección A</option>
-                    <option value="Sección B">Sección B</option>
-                    <option value="Sección C">Sección C</option>
-                </select>
-            </div>
+        <div id="cicloSeccion">
+            <label>Ciclo:</label>
+            <select id="ciclo"></select>
 
-            <label>Vía:</label>
-            <input type="text" id="via" placeholder="Ingrese la vía">
-
-            <button class="btn" onclick="enviarReporte('salida')">TRASLADO SALIDA</button>
-            <button class="btn" onclick="enviarReporte('regreso')">TRASLADO REGRESO</button>
-            <button class="btn" onclick="enviarReporte('inicio')">INICIO DE LABOR</button>
-            <button class="btn" onclick="enviarReporte('fin')">FIN DE LABOR</button>
-
-            <button class="btn btn-regresar" onclick="regresarAPrincipal()">INICIO</button>
-
-            <br><br>
-            <!-- Enlace para enviar el mensaje a WhatsApp, este se maneja en el código JS -->
-            <a id="whatsappLink" href="#" target="_blank" class="btn hidden">ENVIAR AL GRUPO DE WHATSAPP</a>
+            <label>Sección:</label>
+            <select id="seccion"></select>
         </div>
+
+        <label>Vía:</label>
+        <input type="text" id="via" placeholder="Ingrese la vía">
+
+        <button class="btn" onclick="enviarReporte('salida')">TRASLADO SALIDA</button>
+        <button class="btn" onclick="enviarReporte('regreso')">TRASLADO REGRESO</button>
+        <button class="btn" onclick="enviarReporte('inicio')">INICIO DE LABOR</button>
+        <button class="btn" onclick="enviarReporte('fin')">FIN DE LABOR</button>
+
+        <button class="btn btn-regresar" onclick="regresarAPrincipal()">INICIO</button>
+
+        <a id="whatsappLink" href="#" target="_blank" class="btn hidden">ENVIAR AL GRUPO DE WHATSAPP</a>
     </div>
+</div>
 
-    <!-- Sección de la versión y la fecha -->
-    <div class="footer">
-        <p>Versión: 001</p>
-        <p id="fechaHora"></p> <!-- La fecha y hora se actualizarán aquí -->
-    </div>
+<div class="footer">
+    <p>Versión: 001</p>
+    <p id="fechaHora"></p>
+</div>
 
-    <script>
-        function irAUrl(url, boton) {
-            if (boton === 'validarUsuario') {
-                window.open(url, '_blank');
-            } else {
-                localStorage.setItem('lastVisited', url);
-                window.location.href = url;
-            }
+<script>
+    const urlDatos = "https://script.google.com/macros/s/AKfycbwtp_FbJSAgZM4P9iUmTR2C6WI8gzd3Oh7TV2MlTpMaduOqFhg8HokVs5PMnrDchBer/exec";
+
+    fetch(urlDatos)
+        .then(res => res.json())
+        .then(data => {
+            llenarSelect("operario", data.operarios);
+            llenarSelect("ciclo", data.ciclos);
+
+            document.getElementById("ciclo").addEventListener("change", function () {
+                const cicloSeleccionado = this.value;
+                const secciones = data.seccionesPorCiclo[cicloSeleccionado] || [];
+                llenarSelect("seccion", secciones);
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar datos:", error);
+        });
+
+    function llenarSelect(id, valores) {
+        const select = document.getElementById(id);
+        select.innerHTML = '<option value="">Seleccione</option>';
+        valores.forEach(valor => {
+            const option = document.createElement("option");
+            option.value = valor;
+            option.textContent = valor;
+            select.appendChild(option);
+        });
+    }
+
+    function irAUrl(url, boton) {
+        if (boton === 'validarUsuario') {
+            window.open(url, '_blank');
+        } else {
+            localStorage.setItem('lastVisited', url);
+            window.location.href = url;
+        }
+    }
+
+    function mostrarFechaHora() {
+        const now = new Date();
+        const fecha = now.toLocaleDateString();
+        const hora = now.toLocaleTimeString();
+        document.getElementById('fechaHora').innerHTML = `Fecha y Hora: ${fecha} ${hora}`;
+    }
+
+    function mostrarFormulario() {
+        document.getElementById('formularioReporte').classList.remove('hidden');
+    }
+
+    function regresarAPrincipal() {
+        document.getElementById('formularioReporte').classList.add('hidden');
+    }
+
+    function enviarReporte(tipo) {
+        const operario = document.getElementById('operario').value;
+        const ciclo = document.getElementById('ciclo').value;
+        const seccion = document.getElementById('seccion').value;
+        const via = document.getElementById('via').value;
+
+        if ((tipo === 'salida' || tipo === 'regreso') && (!operario || !ciclo || !seccion || !via)) {
+            alert("Por favor complete todos los campos.");
+            return;
         }
 
-        window.onload = function() {
-            document.getElementById('btnValidarUsuario').style.display = 'inline-block';
-            document.getElementById('btnRevisionEjecutada').style.display = 'inline-block';
-            document.getElementById('btnPendienteDescargas').style.display = 'inline-block';
-            document.getElementById('btnPaginaPrueba').style.display = 'inline-block';
-            document.getElementById('btnReporteDiario').style.display = 'inline-block';
-
-            mostrarFechaHora();
-        };
-
-        function mostrarFechaHora() {
-            const now = new Date();
-            const fecha = now.toLocaleDateString();
-            const hora = now.toLocaleTimeString();
-            document.getElementById('fechaHora').innerHTML = `Fecha y Hora: ${fecha} ${hora}`;
+        if ((tipo === 'inicio' || tipo === 'fin') && (!operario || !via)) {
+            alert("Por favor complete los campos de Operario y Vía.");
+            return;
         }
 
-        function mostrarFormulario() {
-            document.getElementById('btnValidarUsuario').style.display = 'none';
-            document.getElementById('btnRevisionEjecutada').style.display = 'none';
-            document.getElementById('btnPendienteDescargas').style.display = 'none';
-            document.getElementById('btnPaginaPrueba').style.display = 'none';
-            document.getElementById('formularioReporte').classList.remove('hidden');
+        let mensaje = `*REPORTE*\nOperario: ${operario}\nVía: ${via}`;
+        if (tipo === 'salida') {
+            mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🟢 Traslado de salida iniciado.`;
+        } else if (tipo === 'regreso') {
+            mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🔵 Traslado de regreso iniciado.`;
+        } else if (tipo === 'inicio') {
+            mensaje = `*REPORTE PRIMERA LECTURA*\nOperario: ${operario}\nUsuario: ${via}`;
+        } else if (tipo === 'fin') {
+            mensaje = `*REPORTE FIN DE LABOR*\nOperario: ${operario}\nLLEGANDO A: ${via}`;
         }
 
-        function regresarAPrincipal() {
-            // Aquí volvemos a mostrar los botones principales y ocultamos el formulario
-            document.getElementById('formularioReporte').classList.add('hidden');
-            document.getElementById('btnValidarUsuario').style.display = 'inline-block';
-            document.getElementById('btnRevisionEjecutada').style.display = 'inline-block';
-            document.getElementById('btnPendienteDescargas').style.display = 'inline-block';
-            document.getElementById('btnPaginaPrueba').style.display = 'inline-block';
-            document.getElementById('btnReporteDiario').style.display = 'inline-block';
-        }
+        const mensajeCodificado = encodeURIComponent(mensaje);
+        const link = `https://wa.me/?text=${mensajeCodificado}`;
+        window.location.href = link;
+    }
 
-        function enviarReporte(tipo) {
-            const operario = document.getElementById('operario').value;
-            const ciclo = document.getElementById('ciclo').value;
-            const seccion = document.getElementById('seccion').value;
-            const via = document.getElementById('via').value;
-
-            if (tipo === 'salida' || tipo === 'regreso') {
-                if (!operario || !ciclo || !seccion || !via) {
-                    alert("Por favor complete todos los campos.");
-                    return;
-                }
-            }
-
-            if (tipo === 'inicio' || tipo === 'fin') {
-                if (!operario || !via) {
-                    alert("Por favor complete los campos de Operario y Vía.");
-                    return;
-                }
-            }
-
-            let mensaje = `*REPORTE*\nOperario: ${operario}\nVía: ${via}`;
-            if (tipo === 'salida') {
-                mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🟢 Traslado de salida iniciado.`;
-            } else if (tipo === 'regreso') {
-                mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🔵 Traslado de regreso iniciado.`;
-            } else if (tipo === 'inicio') {
-                mensaje = `*REPORTE PRIMERA LECTURA*\nOperario: ${operario}\nUsuario: ${via}`;
-            } else if (tipo === 'fin') {
-                mensaje = `*REPORTE FIN DE LABOR*\nOperario: ${operario}\nLLEGANDO A: ${via}`;
-            }
-
-            const mensajeCodificado = encodeURIComponent(mensaje);
-            const link = `https://wa.me/?text=${mensajeCodificado}`;
-
-            window.location.href = link;
-        }
-    </script>
-
+    window.onload = mostrarFechaHora;
+</script>
 </body>
 </html>
