@@ -2,311 +2,158 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aplicación de Navegación</title>
+  <title>GPS Decoder 🌐</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Courier New', monospace;
+      background: #0f172a;
+      color: #e2e8f0;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      flex-direction: column;
-      color: #333;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 600px;
-      background-color: #fff;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       padding: 20px;
+      text-align: center;
+    }
+    h2 {
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      color: #94a3b8;
+    }
+    input {
+      padding: 12px;
+      width: 80%;
+      max-width: 500px;
+      font-size: 18px;
       border-radius: 12px;
-      text-align: center;
-      margin: 0 auto 60px auto;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .container:hover {
-      transform: scale(1.02);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 24px;
-      margin: 10px 0;
       border: none;
-      border-radius: 8px;
+      background: #1e293b;
+      color: #f1f5f9;
+      margin-top: 15px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 12px 24px;
       font-size: 16px;
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0ea5e9;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #facc15;
+    }
+    #mapa {
+      margin-top: 25px;
       width: 100%;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #45a049;
-      transform: translateY(-3px);
-    }
-
-    .btn-regresar {
-      background-color: #FF6347;
-      width: 50%;
-      margin: 10px auto;
-    }
-
-    .btn-regresar:hover {
-      background-color: #FF4500;
-      transform: translateY(-3px);
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .logo {
-      width: 120px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-
-    .hidden {
+      height: 60vh;
+      border: none;
+      border-radius: 14px;
       display: none;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+      transition: all 0.3s ease;
     }
-
-    label {
-      font-weight: bold;
-      color: #444;
-      margin-bottom: 6px;
-      text-align: left;
-      display: block;
+    .error {
+      color: #f87171;
     }
-
-    .form-group {
-      margin-bottom: 20px;
-      text-align: left;
-      width: 100%;
-    }
-
-    .form-group select,
-    .form-group input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 4px;
-      border: 2px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-
-    #cicloSeccion {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    #cicloSeccion .form-group {
-      flex: 1;
-    }
-
-    .btn-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 5px;
-      margin-bottom: 20px;
-    }
-
-    .btn-row .btn {
-      width: 48%;
-    }
-
-    #vistaReporte h2 {
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #2E8B57;
-      text-align: center;
-    }
-
-    .footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 14px;
-      color: #888;
-      background-color: #fff;
-      padding: 10px 0;
-      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .footer p {
-      margin: 0;
-    }
-
-    #whatsappLink {
-      text-decoration: none;
-      text-align: center;
+    .success {
+      color: #4ade80;
     }
   </style>
 </head>
 <body>
+  <h2>📍 GPS Decoder con Letras</h2>
+  <p>Pega el código codificado con letras: <code>BCKDEFFGHIJLM...</code></p>
 
-<!-- Vista principal -->
-<div class="container" id="inicio">
-  <img src="Logo.png" alt="Logo de la página" class="logo">
-  <h1>REGIONAL PAMPLONA</h1>
+  <input type="text" id="codigo" placeholder="Ejemplo: HKIHAJGGGLMHCKBVAAAGV" />
+  <br />
+  <button onclick="decodificar()">Mostrar en mapa</button>
 
-  <button class="btn" onclick="mostrarFormulario()">REPORTE DIARIO</button>
-  <button class="btn" onclick="irAUrl('https://script.google.com/macros/s/AKfycbwEzt9hEVWLy-7GaGEdp1R8SW76SrjOkLOANzhdzaSVq1JszaJ_MyNKhlEHRD7lrbp2sA/exec', 'validarUsuario')">VALIDADOR USUARIO</button>
-  <button class="btn" onclick="irAUrl('https://script.google.com/macros/s/AKfycbw2z6rVlBqlPU0drL9Rus_p_ORjVfl8iGQBL-gupoDio4Fq3ElbrqUILguiAtLYWpJZfg/exec', 'revisionEjecutada')">REVISIONES EJECUTADAS</button>
-  <button class="btn" onclick="irAUrl('https://script.google.com/macros/s/AKfycbw-YQTef8VFk4KPc7S8iPnmMXxzaXLegyH8tLk-TqxNwROMi-mRqiUh8LwhQ2J1RbXFAA/exec', 'pendienteDescargas')">CONSULTA DE RUTA Y KML</button>
-  <button class="btn" onclick="irAUrl('https://www.google.com', 'paginaPrueba')">ERRORES</button>
-</div>
+  <div id="resultado"></div>
+  <iframe id="mapa"></iframe>
 
-<!-- Vista de formulario -->
-<div class="container hidden" id="vistaReporte">
-  <h2>Reporte Diario</h2>
+  <script>
+    // Mapa de decodificación (letra -> símbolo/número)
+    const mapaDecodificacion = {
+      "F": "0", "G": "1", "C": "2", "I": "3", "V": "4",
+      "A": "5", "B": "6", "H": "7", "Z": "8", "J": "9",
+      "K": ".", "L": ",", "M": "-"
+    };
 
-  <div class="form-group">
-    <label for="operario">Operario:</label>
-    <select id="operario"></select>
-  </div>
+    function decodificar() {
+      const input = document.getElementById('codigo').value.trim().toUpperCase();
+      const resultadoDiv = document.getElementById('resultado');
+      const mapaFrame = document.getElementById("mapa");
+      
+      // Resetear visualización
+      resultadoDiv.innerHTML = '';
+      mapaFrame.style.display = "none";
 
-  <div id="cicloSeccion">
-    <div class="form-group">
-      <label for="ciclo">Ciclo:</label>
-      <select id="ciclo"></select>
-    </div>
-    <div class="form-group">
-      <label for="seccion">Sección:</label>
-      <select id="seccion"></select>
-    </div>
-  </div>
+      if (!input) {
+        resultadoDiv.innerHTML = '<span class="error">⚠️ Por favor ingresa un código</span>';
+        return;
+      }
 
-  <div class="form-group">
-    <label for="via">Vía:</label>
-    <input type="text" id="via" placeholder="Ingrese la vía">
-  </div>
+      let resultado = '';
+      let caracteresInvalidos = [];
+      
+      // Decodificar cada carácter
+      for (const letra of input) {
+        if (mapaDecodificacion[letra]) {
+          resultado += mapaDecodificacion[letra];
+        } else {
+          caracteresInvalidos.push(letra);
+        }
+      }
 
-  <div class="btn-row">
-    <button class="btn" onclick="enviarReporte('salida')">TRASLADO SALIDA</button>
-    <button class="btn" onclick="enviarReporte('regreso')">TRASLADO REGRESO</button>
-  </div>
+      // Mostrar advertencia si hay caracteres no reconocidos
+      if (caracteresInvalidos.length > 0) {
+        resultadoDiv.innerHTML += `
+          <span class="error">
+            ⚠️ Caracteres no reconocidos: ${caracteresInvalidos.join(', ')}<br>
+            (Se ignoraron en la decodificación)
+          </span><br><br>
+        `;
+      }
 
-  <div class="btn-row">
-    <button class="btn" onclick="enviarReporte('inicio')">INICIO DE LABOR</button>
-    <button class="btn" onclick="enviarReporte('fin')">FIN DE LABOR</button>
-  </div>
+      // Verificar formato de coordenadas
+      const partes = resultado.split(",");
+      if (partes.length === 2 && !isNaN(partes[0]) && !isNaN(partes[1])) {
+        const lat = parseFloat(partes[0]).toFixed(7);
+        const lon = parseFloat(partes[1]).toFixed(7);
+        
+        resultadoDiv.innerHTML += `
+          <span class="success">
+            ✅ Coordenada decodificada: <strong>${lat}, ${lon}</strong>
+          </span>
+        `;
+        
+        // Mostrar mapa
+        mapaFrame.src = `https://www.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+        mapaFrame.style.display = "block";
+      } else {
+        resultadoDiv.innerHTML += `
+          <span class="error">
+            ⚠️ Formato inválido. El código debe decodificar a "latitud,longitud"<br>
+            Cadena decodificada: ${resultado || '[vacío]'}
+          </span>
+        `;
+      }
+    }
 
-  <button class="btn btn-regresar" onclick="regresarAPrincipal()">INICIO</button>
-  <a id="whatsappLink" href="#" target="_blank" class="btn hidden">ENVIAR AL GRUPO DE WHATSAPP</a>
-</div>
-
-<div class="footer">
-  <p>Versión: 001</p>
-  <p id="fechaHora"></p>
-</div>
-
-<script>
-  const urlDatos = "https://script.google.com/macros/s/AKfycbwtp_FbJSAgZM4P9iUmTR2C6WI8gzd3Oh7TV2MlTpMaduOqFhg8HokVs5PMnrDchBer/exec";
-
-  fetch(urlDatos)
-    .then(res => res.json())
-    .then(data => {
-      llenarSelect("operario", data.operarios);
-      llenarSelect("ciclo", data.ciclos);
-
-      document.getElementById("ciclo").addEventListener("change", function () {
-        const cicloSeleccionado = this.value;
-        const secciones = data.seccionesPorCiclo[cicloSeleccionado] || [];
-        llenarSelect("seccion", secciones);
-      });
-    })
-    .catch(error => {
-      console.error("Error al cargar datos:", error);
+    // Permitir decodificar con Enter
+    document.getElementById('codigo').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        decodificar();
+      }
     });
-
-  function llenarSelect(id, valores) {
-    const select = document.getElementById(id);
-    select.innerHTML = '<option value="">Seleccione</option>';
-    valores.forEach(valor => {
-      const option = document.createElement("option");
-      option.value = valor;
-      option.textContent = valor;
-      select.appendChild(option);
-    });
-  }
-
-  function irAUrl(url, boton) {
-    if (boton === 'validarUsuario') {
-      window.open(url, '_blank');
-    } else {
-      localStorage.setItem('lastVisited', url);
-      window.location.href = url;
-    }
-  }
-
-  function mostrarFechaHora() {
-    const now = new Date();
-    const fecha = now.toLocaleDateString();
-    const hora = now.toLocaleTimeString();
-    document.getElementById('fechaHora').innerHTML = `Fecha y Hora: ${fecha} ${hora}`;
-  }
-
-  function mostrarFormulario() {
-    document.getElementById('inicio').classList.add('hidden');
-    document.getElementById('vistaReporte').classList.remove('hidden');
-  }
-
-  function regresarAPrincipal() {
-    document.getElementById('vistaReporte').classList.add('hidden');
-    document.getElementById('inicio').classList.remove('hidden');
-  }
-
-  function enviarReporte(tipo) {
-    const operario = document.getElementById('operario').value;
-    const ciclo = document.getElementById('ciclo').value;
-    const seccion = document.getElementById('seccion').value;
-    const via = document.getElementById('via').value;
-
-    if ((tipo === 'salida' || tipo === 'regreso') && (!operario || !ciclo || !seccion || !via)) {
-      alert("Por favor complete todos los campos.");
-      return;
-    }
-
-    if ((tipo === 'inicio' || tipo === 'fin') && (!operario || !via)) {
-      alert("Por favor complete los campos de Operario y Vía.");
-      return;
-    }
-
-    let mensaje = `*REPORTE*\nOperario: ${operario}\nVía: ${via}`;
-    if (tipo === 'salida') {
-      mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🟢 Traslado de salida iniciado.`;
-    } else if (tipo === 'regreso') {
-      mensaje += `\nCiclo: ${ciclo}\nSección: ${seccion}\n🔵 Traslado de regreso iniciado.`;
-    } else if (tipo === 'inicio') {
-      mensaje = `*REPORTE PRIMERA LECTURA*\nOperario: ${operario}\nUsuario: ${via}`;
-    } else if (tipo === 'fin') {
-      mensaje = `*REPORTE FIN DE LABOR*\nOperario: ${operario}\nLLEGANDO A: ${via}`;
-    }
-
-    const mensajeCodificado = encodeURIComponent(mensaje);
-    const link = `https://wa.me/?text=${mensajeCodificado}`;
-    window.location.href = link;
-  }
-
-  window.onload = function () {
-    mostrarFechaHora();
-  };
-</script>
-
+  </script>
 </body>
 </html>
